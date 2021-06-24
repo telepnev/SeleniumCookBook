@@ -63,6 +63,19 @@ Set<Cookie> cookies = driver.manage().getCookies();
 driver.manage().deleteCookieNamed("test");
 driver.manage().deleteAllCookies();`_
 
+**Параллельный запуск**
+
+Пример моего кода:
+https://github.com/telepnev/SeleniumBook/tree/parallel_Browser
+
+https://github.com/telepnev/SeleniumBook/tree/parallel_Browser
+
+WebDriverFactory: `https://github.com/barancev/webdriver-factory
+
+https://github.com/barancev/selenium-training/blob/master/java-example/src/test/java/ru/stqa/training/selenium/TestBase.java
+
+
+
 
 
 
