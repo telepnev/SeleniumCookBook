@@ -1,47 +1,46 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.openqa.selenium.By;
-import org.openqa.selenium.HasCapabilities;
-import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.concurrent.TimeUnit;
+
 public class TestBase {
+
+    public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<>();
     public WebDriver driver;
     public WebDriverWait wait;
 
-
-    public boolean isElementPresent(By locator) {
-        try {
-            wait.until(WebDriver d) -> d.findElement(locator));
-            return true;
-        }
-        catch (TimeoutException ex) {
-            return false;
-        }
-    }
-
     @BeforeEach
     public void setUp() {
-
+        if (tlDriver.get() != null) {
+            driver = tlDriver.get();
+            wait = new WebDriverWait(driver, 10);
+            return;
+        }
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        wait = new WebDriverWait(driver, 10);
-
-        System.out.println(((HasCapabilities) driver).getCapabilities());
+        tlDriver.set(driver);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
+
+        Runtime.getRuntime().addShutdownHook(
+                new Thread(() -> {
+                    driver.quit();
+                    driver = null;
+                })
+        );
 
     }
 
     @AfterEach
     public void stop() {
-        driver.manage().deleteAllCookies();
-        if (driver != null) {
-            driver.quit();
-        }
+//        driver.manage().deleteAllCookies();
+//        if (driver != null) {
+//            driver.quit();
+//        }
     }
-
-
 }
+

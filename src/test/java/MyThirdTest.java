@@ -1,13 +1,10 @@
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
-
-public class FirstTest extends TestBase {
-
-
+public class MyThirdTest extends TestBase{
     @Test
     void loginTest() {
         driver.get("http://localhost/litecart/admin/");

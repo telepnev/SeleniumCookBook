@@ -13,6 +13,7 @@ test {
     useJUnitPlatform()
 }
 dependencies {
+    implementation 'junit:junit:4.13.1'
     dependencies {
         compile 'org.seleniumhq.selenium:selenium-java:3.141.59'
         compile 'org.aeonbits.owner:owner:1.0.12'
